@@ -1,0 +1,32 @@
+version: "3"
+
+services:
+  api_server:
+    build:
+      dockerfile: ./Dockerfile
+      context: .
+    image: api_server
+    container_name: api_server
+    ports: 
+      - 3001:3001
+    links:
+      - db
+    command: bash -c "bash ./wait-for-it.sh db:5432 -q -- diesel setup && cargo watch -x run"
+    networks:
+      - apinetwork
+
+  db:
+    image: postgres:9
+    ports: 
+      - 5432:5432
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data/pgdata
+    environment:
+      POSTGRES_PASSWORD: supersecretpassword
+      PGDATA: /var/lib/postgresql/data/pgdata
+    networks:
+      - apinetwork
+
+networks:
+  apinetwork:
+    driver: bridge

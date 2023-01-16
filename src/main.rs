@@ -11,6 +11,7 @@ use std::env;
 mod db;
 mod employees;
 mod error_handler;
+mod schema;
 
 #[actix_rt::main]
 async fn main() -> std::io::Result<()> {

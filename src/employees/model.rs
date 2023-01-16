@@ -1,3 +1,9 @@
+use crate::db;
+use crate::error_handler::CustomError;
+use crate::schema::employees;
+use diesel::prelude::*;
+use serde::{Deserialize, Serialize};
+
 #[derive(Serialize, Deserialize, AsChangeset, Insertable)]
 #[table_name = "employees"]
 pub struct Employee {
@@ -24,11 +30,13 @@ impl Employees {
         let employees = employees::table.load::<Employees>(&conn)?;
         Ok(employees)
     }
+
     pub fn find(id: i32) -> Result<Self, CustomError> {
         let conn = db::connection()?;
         let employee = employees::table.filter(employees::id.eq(id)).first(&conn)?;
         Ok(employee)
     }
+
     pub fn create(employee: Employee) -> Result<Self, CustomError> {
         let conn = db::connection()?;
         let employee = Employee::from(employee);
@@ -37,6 +45,7 @@ impl Employees {
             .get_result(&conn)?;
         Ok(employee)
     }
+
     pub fn update(id: i32, employee: Employee) -> Result<Self, CustomError> {
         let conn = db::connection()?;
         let employee = diesel::update(employees::table)
@@ -45,12 +54,14 @@ impl Employees {
             .get_result(&conn)?;
         Ok(employee)
     }
+
     pub fn delete(id: i32) -> Result<usize, CustomError> {
         let conn = db::connection()?;
         let res = diesel::delete(employees::table.filter(employees::id.eq(id))).execute(&conn)?;
         Ok(res)
     }
 }
+
 impl Employee {
     fn from(employee: Employee) -> Employee {
         Employee {
