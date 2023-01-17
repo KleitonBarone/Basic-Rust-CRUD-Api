@@ -6,6 +6,8 @@ RUN cargo install cargo-watch
 
 WORKDIR /usr/src/app
 
+COPY . .
+
 EXPOSE 3001
 
 VOLUME ["/usr/local/cargo"]
