@@ -11,7 +11,7 @@ services:
       - 3001:3001
     links:
       - db
-    command: bash -c "bash ./wait-for-it.sh db:5432 -q -- diesel setup && cargo watch -x run"
+    command: bash -c "bash ./wait-for-it.sh db:5432 -q -- diesel setup && cargo run"
     networks:
       - apinetwork
 

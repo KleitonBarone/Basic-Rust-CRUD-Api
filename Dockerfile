@@ -1,4 +1,4 @@
-FROM rustlang/rust:nightly
+FROM rust:1.66.1
 
 RUN cargo install diesel_cli --no-default-features --features postgres
 
