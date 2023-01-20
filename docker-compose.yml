@@ -8,10 +8,10 @@ services:
     image: api_server
     container_name: api_server
     ports: 
-      - 3001:3001
+      - 8080:8080
     links:
       - db
-    command: bash -c "bash ./wait-for-it.sh db:5432 -q -- diesel setup && cargo run"
+    command: bash -c "bash ./wait-for-it.sh db:5432 -q -- diesel setup && cargo run --release"
     networks:
       - apinetwork
 

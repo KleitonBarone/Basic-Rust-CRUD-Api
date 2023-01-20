@@ -3,6 +3,8 @@ extern crate diesel;
 #[macro_use]
 extern crate diesel_migrations;
 
+extern crate env_logger;
+
 use actix_web::{App, HttpServer};
 use dotenv::dotenv;
 use listenfd::ListenFd;
@@ -15,7 +17,9 @@ mod schema;
 
 #[actix_rt::main]
 async fn main() -> std::io::Result<()> {
+
     dotenv().ok();
+    env_logger::init();
     db::init();
 
     let mut listenfd = ListenFd::from_env();
