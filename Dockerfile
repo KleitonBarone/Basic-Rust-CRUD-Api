@@ -8,4 +8,4 @@ COPY . .
 
 RUN cargo build --release
 
-ENTRYPOINT [ "cargo", "run", "--release" ]
+ENTRYPOINT bash -c "diesel setup && cargo run --release"

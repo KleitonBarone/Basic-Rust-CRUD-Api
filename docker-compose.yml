@@ -7,11 +7,11 @@ services:
       context: .
     image: api_server
     container_name: api_server
+    restart: on-failure
     ports: 
       - 8080:8080
     links:
       - db
-    command: bash -c "bash ./wait-for-it.sh db:5432 -q -- diesel setup && cargo run --release"
     networks:
       - apinetwork
 
